@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx vue-tsc:*)",
+      "Bash(node -e:*)",
+      "Bash(npx vite build)"
+    ]
+  }
+}
