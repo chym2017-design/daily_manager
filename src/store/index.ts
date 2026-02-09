@@ -312,7 +312,8 @@ const actions = {
       return instances;
     }
 
-    // 周期任务：在视图范围内生成实例（不受 endDate 限制，无限重复）
+    // 周期任务：在视图范围内生成实例，受 endDate 限制
+    const taskEndDate = new Date(task.endDate);
     const hours = taskStartDate.getHours();
     const minutes = taskStartDate.getMinutes();
 
@@ -320,7 +321,7 @@ const actions = {
       let cur = new Date(viewStartDate);
       cur.setHours(hours, minutes, 0, 0);
       if (cur < taskStartDate) cur = new Date(taskStartDate);
-      while (cur <= viewEndDate) {
+      while (cur <= viewEndDate && cur <= taskEndDate) {
         instances.push({
           ...task,
           id: `${task.id}_${cur.toISOString()}`,
@@ -335,7 +336,7 @@ const actions = {
       let cur = new Date(viewStartDate);
       cur.setHours(hours, minutes, 0, 0);
       if (cur < taskStartDate) cur = new Date(taskStartDate);
-      while (cur <= viewEndDate) {
+      while (cur <= viewEndDate && cur <= taskEndDate) {
         if (task.weekdays.includes(cur.getDay())) {
           instances.push({
             ...task,
@@ -354,7 +355,7 @@ const actions = {
       // 从视图开始月份遍历到视图结束月份
       while (true) {
         const d = new Date(year, month, day, hours, minutes, 0, 0);
-        if (d > viewEndDate) break;
+        if (d > viewEndDate || d > taskEndDate) break;
         if (d >= viewStartDate && d >= taskStartDate) {
           instances.push({
             ...task,
@@ -373,7 +374,7 @@ const actions = {
       if (year < taskStartDate.getFullYear()) year = taskStartDate.getFullYear();
       while (true) {
         const date = new Date(year, m - 1, d, hours, minutes, 0, 0);
-        if (date > viewEndDate) break;
+        if (date > viewEndDate || date > taskEndDate) break;
         if (date >= viewStartDate && date >= taskStartDate) {
           instances.push({
             ...task,
