@@ -60,7 +60,7 @@ const initialTasks: Task[] = [
     "title": "生日",
     "description": "",
     "startDate": "2000-01-27T02:38:00.000Z",
-    "endDate": "2200-02-09T03:38:00.000Z",
+    "endDate": "2002-02-09T03:38:00.000Z",
     "urgency": "not_urgent",
     "importance": "not_important",
     "categoryId": null,
